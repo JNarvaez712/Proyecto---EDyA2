@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './componentes/header';
+import MovieList from './componentes/movielist';
+import Footer from './componentes/footer';
+import SeatReservation from './componentes/seatReservation';
+import FoodCombos from './componentes/combos';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [combos, setCombos] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=d6a0f3f234c9f4d0731869466402b08c&language=es-ES`);
+        const data = await response.json();
+        const fetchedMovies = data.results.map(movie => ({
+          id: movie.id,
+          title: movie.title,
+          description: movie.overview,
+          poster: `https://image.tmdb.org/t/p/original${movie.poster_path}`
+        }));
+        setMovies(fetchedMovies);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    const fetchCombos = () => {
+      const manualCombos = [
+        {
+          id: 1,
+          name: "Combo 1",
+          description: "Palomitas grandes y refresco grande",
+          price: 23900,
+          image: "https://s3.amazonaws.com/puntospoint-media/events/images/000/016/037/original/combo1.jpg"
+        },
+        {
+          id: 2,
+          name: "Combo 2",
+          description: "Palomitas medianas, 2 gaseosas medianas, 1 perro caliente y 1 mini sandwich",
+          price: 28900,
+          image: "https://archivos-cms.cinecolombia.com/images/6/6/4/7/7466-9-esl-CO/6ce5ad738478-2532cine-colombia.jpg"
+        },
+        {
+          id: 3,
+          name: "Combo 3",
+          description: "2 Palomitas medianas, 4 gaseosas personales, 4 perros calientes, 2 chocolatinas y 2 bolsas nachos",
+          price: 42900,
+          image: "https://cdn.inoutdelivery.com/cinecolombia.inoutdelivery.com/sm/1709247865188-6.Mega-Combo.png"
+        }
+      ];
+      setCombos(manualCombos);
+    };
+
+    fetchMovies();
+    fetchCombos();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Router basename='/'>
+      <Header />
+      <Routes>
+        <Route exact path="/" element={<MovieList movies={movies} />} />
+        <Route path="/reserve/:id" element={<SeatReservation movie={movies.find(m => m.id === parseInt(window.location.pathname.split('/').pop(), 10))} />} />
+        <Route path="/combos" element={<FoodCombos combos={combos} />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
+};
 
-export default App
+export default App;

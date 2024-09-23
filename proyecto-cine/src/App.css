@@ -5,38 +5,99 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header, .footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.movie-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  max-width: 300px;
 }
 
-.card {
-  padding: 2em;
+.movie-item:hover {
+  transform: scale(1.05);
 }
 
-.read-the-docs {
-  color: #888;
+.movie-item img {
+  width: 100%;
+  height: auto;
+}
+
+.movie-item .movie-title {
+  font-size: 1.2rem;
+  margin: 10px;
+  text-align: center;
+}
+
+.movie-item .movie-description {
+  font-size: 0.9rem;
+  margin: 10px;
+  color: #666;
+  text-align: justify;
+}
+
+.seat-reservation {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.seat-reservation h2 {
+  margin-bottom: 1rem;
+}
+
+.seat-reservation .seat {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  background-color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.seat-reservation .seat.selected {
+  background-color: #6c757d;
+}
+
+.seat-reservation .seat.occupied {
+  background-color: #444;
+  cursor: not-allowed;
+}
+
+.reserve-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.reserve-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
