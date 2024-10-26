@@ -10,7 +10,7 @@ const MovieList = ({ movies }) => {
           <div className="movie-details">
             <h3>{movie.title}</h3>
             <p>{movie.description}</p>
-            <Link to={`/reserve/${movie.id}`} className="reserve-button">Reservar tus boletas</Link>
+            <Link to={`/reserve/${movie.id}`} className="reserve-button">Reserva tus boletas</Link>
           </div>
         </div>
       ))}

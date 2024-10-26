@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../seatReservation.css';
 
-const SeatReservation = () => {
-  const [selectedSeats, setSelectedSeats] = useState([]);
+const SeatReservation = ({setSelectedSeats}) => {
+  const [selectedSeats, setLocalSelectedSeats] = useState([]);
   const navigate = useNavigate();
 
   const seatLetters = 'ABCDEFGHIJ'.split(''); // Letras de las filas
   const seatsPerRow = 10; // Número de asientos por fila
 
   const toggleSeatSelection = (seatNumber) => {
-    setSelectedSeats((prevSelectedSeats) =>
+    setLocalSelectedSeats((prevSelectedSeats) =>
       prevSelectedSeats.includes(seatNumber)
         ? prevSelectedSeats.filter((seat) => seat !== seatNumber)
         : [...prevSelectedSeats, seatNumber]
@@ -22,7 +22,8 @@ const SeatReservation = () => {
   };
 
   const handleContinueClick = () => {
-    navigate('/combos');
+    setSelectedSeats(selectedSeats);
+    navigate('/combos', { state: { selectedSeats } });
   };
 
   return (

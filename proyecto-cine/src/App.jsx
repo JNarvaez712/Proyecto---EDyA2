@@ -3,13 +3,17 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './componentes/header';
 import MovieList from './componentes/movielist';
 import Footer from './componentes/footer';
-import SeatReservation from './componentes/seatReservation';
 import FoodCombos from './componentes/combos';
+import Purchase from './componentes/purchase';
 import './App.css';
+import Reserve from './componentes/reserve';
+import Checkout from './componentes/checkout';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [combos, setCombos] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -64,8 +68,10 @@ const App = () => {
       <Header />
       <Routes>
         <Route exact path="/" element={<MovieList movies={movies} />} />
-        <Route path="/reserve/:id" element={<SeatReservation movie={movies.find(m => m.id === parseInt(window.location.pathname.split('/').pop(), 10))} />} />
+        <Route path="/reserve/:id" element={<Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie}/>} />
         <Route path="/combos" element={<FoodCombos combos={combos} />} />
+        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie}/>} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />
     </Router>
