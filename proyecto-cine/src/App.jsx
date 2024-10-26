@@ -14,6 +14,11 @@ const App = () => {
   const [combos, setCombos] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [occupiedSeats, setOccupiedSeats] = useState(() => {
+
+    const savedOccupiedSeats = localStorage.getItem('occupiedSeats');
+    return (savedOccupiedSeats) ? JSON.parse(savedOccupiedSeats) : [];
+  });
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -63,14 +68,18 @@ const App = () => {
     fetchCombos();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('occupiedSeats', JSON.stringify(occupiedSeats));
+  } , [occupiedSeats]);
+
   return (
     <Router basename='/'>
       <Header />
       <Routes>
         <Route exact path="/" element={<MovieList movies={movies} />} />
-        <Route path="/reserve/:id" element={<Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie}/>} />
+        <Route path="/reserve/:id" element={<Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats}/>} />
         <Route path="/combos" element={<FoodCombos combos={combos} />} />
-        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie}/>} />
+        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats}/>} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />

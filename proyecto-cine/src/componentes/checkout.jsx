@@ -7,7 +7,8 @@ import '../checkout.css';
 const Checkout = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { selectedSeats, selectedCombo, selectedMovie } = location.state || {};
+    const { selectedSeats, selectedCombo, selectedMovie, occupiedSeats } = location.state || {};
+
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -60,7 +61,7 @@ const Checkout = () => {
     };
 
     const handleBackClick = () => {
-        navigate('/purchase', { state: { selectedSeats, selectedCombo, selectedMovie } });
+        navigate('/purchase', { state: { selectedSeats, selectedCombo, selectedMovie, occupiedSeats } });
     }
 
     return (

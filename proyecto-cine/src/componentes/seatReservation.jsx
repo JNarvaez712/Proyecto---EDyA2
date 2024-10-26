@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../seatReservation.css';
 
-const SeatReservation = ({setSelectedSeats}) => {
+const SeatReservation = ({movie, setSelectedSeats, occupiedSeats, setOccupiedSeats}) => {
   const [selectedSeats, setLocalSelectedSeats] = useState([]);
   const navigate = useNavigate();
 
@@ -37,15 +37,20 @@ const SeatReservation = ({setSelectedSeats}) => {
         {seatLetters.map((letter, rowIndex) => (
           <div key={letter} className="seat-row">
             <div className="seat-label">{letter}</div>
-            {Array.from({ length: seatsPerRow }, (_, seatIndex) => (
-              <div
-                key={seatIndex}
-                className={`seat ${selectedSeats.includes(`${letter}${seatIndex + 1}`) ? 'selected' : ''}`}
-                onClick={() => toggleSeatSelection(`${letter}${seatIndex + 1}`)}
-              >
-                {seatIndex + 1}
-              </div>
-            ))}
+            {Array.from({ length: seatsPerRow }, (_, seatIndex) => {
+              const seatNumber = `${letter}${seatIndex + 1}`;
+              const isOccupied = occupiedSeats.includes(seatNumber);
+              const isSelected = selectedSeats.includes(seatNumber);
+              return (
+                <div
+                  key={seatIndex}
+                  className={`seat ${isOccupied ? 'occupied' : isSelected ? 'selected' : ''}`}
+                  onClick={() => !isOccupied && toggleSeatSelection(seatNumber)}
+                >
+                  {seatIndex + 1}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

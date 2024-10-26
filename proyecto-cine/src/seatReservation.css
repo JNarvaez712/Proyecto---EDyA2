@@ -116,6 +116,12 @@
   border-color: #4caf50;
 }
 
+.seat.occupied {
+  background-color: #ff4d4d;
+  color: white;
+  cursor: not-allowed;
+}
+
 .back-button {
   background-color: #007bff;
   color: white;
