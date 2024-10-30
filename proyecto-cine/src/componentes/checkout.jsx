@@ -12,6 +12,7 @@ const Checkout = () => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
+        email: '',
         address: '',
         cardNumber: '',
         expiryDate: '',
@@ -21,8 +22,8 @@ const Checkout = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
-        ...prevData,
-        [name]: value
+            ...prevData,
+            [name]: value
         }));
     };
 
@@ -56,6 +57,21 @@ const Checkout = () => {
         doc.text(`Precio: ${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(selectedCombo.price)}`, 10, 80);
         doc.addImage(qrCodeDataUrl, 'PNG', 10, 90, 50, 50);
 
+        const pdfBase64 = doc.output('datauristring').split(',')[1];
+
+        // Enviar el recibo por correo
+        await fetch('http://localhost:4000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: formData.email,
+                receiptContent,
+                pdfBase64
+            })
+        });
+
         doc.save('recibo.pdf');
         navigate('/');
     };
@@ -67,7 +83,7 @@ const Checkout = () => {
     return (
         <div className="checkout-page">
             <div className="back-button-container">
-                <button className="back-button"  onClick={handleBackClick}>Regresar</button>
+                <button className="back-button" onClick={handleBackClick}>Regresar</button>
             </div>
             <h2>Datos de Compra</h2>
             <form onSubmit={handleSubmit} className="checkout-form">
@@ -82,6 +98,10 @@ const Checkout = () => {
                 <div className="form-group">
                     <label htmlFor="address">Dirección:</label>
                     <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="cardNumber">Tarjeta de Crédito/Débito:</label>
