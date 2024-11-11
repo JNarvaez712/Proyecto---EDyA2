@@ -1,6 +1,6 @@
-import React from "react";
+import "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import '../purchase.css';
+import styles from './purchase.module.css';
 
 const Purchase = ({ selectedMovie, occupiedSeats, setOccupiedSeats }) => {
     const location = useLocation();
@@ -18,13 +18,13 @@ const Purchase = ({ selectedMovie, occupiedSeats, setOccupiedSeats }) => {
     };
 
     return (
-        <div className="purchase-page-container">
-            <div className="back-button-container">
-                <button className="back-button" onClick={handleBackClick}>Regresar</button>
+        <div className={styles["purchase-page-container"]}>
+            <div className={styles["back-button-container"]}>
+                <button className={styles["back-button"]} onClick={handleBackClick}>Regresar</button>
             </div>
-            <div className="purchase-page">
+            <div className={styles["purchase-page"]}>
                 <h2>Confirmación de pago</h2>
-                <div className="purchase-details">
+                <div className={styles["purchase-details"]}>
                     <h3>Asientos seleccionados</h3>
                     <ul>
                         {selectedSeats && selectedSeats.map((seat, index) => (
@@ -33,17 +33,17 @@ const Purchase = ({ selectedMovie, occupiedSeats, setOccupiedSeats }) => {
                     </ul>
                     <h3>Combo Seleccionado:</h3>
                     {selectedCombo && (
-                        <div className="combo-details">
-                            <img src={selectedCombo.image} alt={selectedCombo.name} className="combo-image"/>
+                        <div className={styles["combo-details"]}>
+                            <img src={selectedCombo.image} alt={selectedCombo.name} className={styles["combo-image"]}/>
                             <div>
                                 <h4>{selectedCombo.name}</h4>
                                 <p>{selectedCombo.description}</p>
-                                <p className="combo-price">{new Intl.NumberFormat('es-CO', {style: 'currency', currency:'COP'}).format(selectedCombo.price)}</p>
+                                <p className={styles["combo-price"]}>{new Intl.NumberFormat('es-CO', {style: 'currency', currency:'COP'}).format(selectedCombo.price)}</p>
                             </div>
                         </div>   
                     )}
                 </div>
-                <button className="confirm-button" onClick={handleConfirmClick}>Confirmar Compra</button>
+                <button className={styles["confirm-button"]} onClick={handleConfirmClick}>Confirmar Compra</button>
             </div>
         </div>
     )

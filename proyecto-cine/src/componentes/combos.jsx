@@ -1,6 +1,6 @@
-import React from 'react';
+import 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../combos.css';
+import styles from './combos.module.css';
 
 const FoodCombos = ({ combos }) => {
   const navigate = useNavigate();
@@ -20,18 +20,18 @@ const FoodCombos = ({ combos }) => {
   };
 
   return (
-    <div className="combo-list">
-      <div className="back-button-container">
-        <button className="back-button" onClick={handleBackClick}>Regresar</button>
+    <div className={styles["combo-list"]}>
+      <div className={styles["back-button-container"]}>
+        <button className={styles["back-button"]} onClick={handleBackClick}>Regresar</button>
       </div>
       {combos.map((combo) => (
-        <div key={combo.id} className="combo-item">
-          <img src={combo.image} alt={combo.name} className="combo-image" />
-          <div className="combo-details">
+        <div key={combo.id} className={styles["combo-item"]}>
+          <img src={combo.image} alt={combo.name} className={styles["combo-image"]} />
+          <div className={styles["combo-details"]}>
             <h3>{combo.name}</h3>
             <p>{combo.description}</p>
-            <p className="combo-price">{formatPrice(combo.price)}</p>
-            <button onClick={() => handleOrderClick(combo)} className='order-button'>Ordenar</button>
+            <p className={styles["combo-price"]}>{formatPrice(combo.price)}</p>
+            <button onClick={() => handleOrderClick(combo)} className={styles['order-button']}>Ordenar</button>
           </div>
         </div>
       ))}

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseconfig'
 
+import styles from "./pages.module.css"
+
 const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,12 +27,21 @@ const Login = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleLogin}>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" required />
-        <button type="submit">Ingresar</button>
+    <div className={styles['title-page']}>
+      <h2>Inicio de Sesión</h2>
+      
+      <form onSubmit={handleLogin} className={styles['page-form']}>
+
+        <div className={styles["page-group"]}>
+          <label htmlFor="email">Correo electrónico:</label>
+          <input type="email" className={styles["campo"]} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+    
+          <label htmlFor="password">Contraseña:</label>
+          <input type="password" className={styles["campo"]} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" required />
+        </div>
+
+        <button type="submit" className={styles['confirm-button']}>Ingresar</button>
+
       </form>
     </div>
   );

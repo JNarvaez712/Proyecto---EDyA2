@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import SeatReservation from "./seatReservation";
+import SeatReservation from "./seatReservation"
 
 const Reserve = ({ movies, setSelectedSeats, setSelectedMovie, occupiedSeats, setOccupiedSeats }) => {
     const { id } = useParams();

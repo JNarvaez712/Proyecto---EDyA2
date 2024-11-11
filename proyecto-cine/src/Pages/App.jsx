@@ -1,44 +1,34 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Header from './componentes/header';
-import MovieList from './componentes/movielist';
-import Footer from './componentes/footer';
-import FoodCombos from './componentes/combos';
-import Purchase from './componentes/purchase';
-import './App.css';
-import Reserve from './componentes/reserve';
-import Checkout from './componentes/checkout';
-import ChatBot from './componentes/ChatBot';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './Firebase/firebaseconfig';
+import { BrowserRouter as Router} from 'react-router-dom';
 
-import Login from "./componentes/login";
-import Register from "./componentes/Register";
+import Header from '../componentes/header';
+import Footer from '../componentes/footer';
+import AppRoutes from '../Routes/AppRoutes';
+
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase/firebaseconfig'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-        localStorage.removeItem('isLoggedIn');
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const [movies, setMovies] = useState([]);
   const [combos, setCombos] = useState([]);
   const [, setSelectedSeats] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [occupiedSeats, setOccupiedSeats] = useState(() => {
     const savedOccupiedSeats = localStorage.getItem('occupiedSeats');
-    return (savedOccupiedSeats) ? JSON.parse(savedOccupiedSeats) : [];
+    return savedOccupiedSeats ? JSON.parse(savedOccupiedSeats) : [];
   });
+
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+      if (!user) localStorage.removeItem('isLoggedIn');
+    });
+    return () => unsubscribe();
+  }, []);
+
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -90,22 +80,23 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('occupiedSeats', JSON.stringify(occupiedSeats));
-  }, [occupiedSeats]);
+  } , [occupiedSeats]);
 
   return (
     <Router basename='/'>
-      <Header setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
-      <Routes>
-        <Route exact path="/" element={<MovieList movies={movies} />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/reserve/:id" element={isLoggedIn ? <Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats} /> : <Navigate to="login" />} />
-        <Route path="/combos" element={<FoodCombos combos={combos} />} />
-        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats} />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
+      <Header setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn} />
+      <AppRoutes
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        movies={movies}
+        setSelectedSeats={setSelectedSeats}
+        setSelectedMovie={setSelectedMovie}
+        occupiedSeats={occupiedSeats}
+        setOccupiedSeats={setOccupiedSeats}
+        selectedMovie={selectedMovie}
+        combos={combos}
+      />
       <Footer />
-      <ChatBot /> {/* Agrega el componente de ChatBot para que esté siempre visible */}
     </Router>
   );
 };
