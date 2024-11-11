@@ -70,7 +70,7 @@ const Checkout = () => {
                 <button className={styles["back-button"]}  onClick={handleBackClick}>Regresar</button>
             </div>
             <h2>Datos de Compra</h2>
-            <form onSubmit={handleSubmit} className="checkout-form">
+            <form onSubmit={handleSubmit} className={styles["checkout-form"]}>
                 <div className={styles["form-group"]}>
                     <label htmlFor="name">Nombre:</label>
                     <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
