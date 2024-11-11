@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseconfig';
+import { useNavigate } from 'react-router-dom';
+
 
 import styles from "./pages.module.css"
 
@@ -8,6 +10,9 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const navigate = useNavigate();
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,6 +25,7 @@ const Register = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Usuario registrado con éxito')
+      navigate("/")
     } catch (error) {
       //Para personalizar los errores de firebase sin lo del auth en alert
       let errorMessage;
