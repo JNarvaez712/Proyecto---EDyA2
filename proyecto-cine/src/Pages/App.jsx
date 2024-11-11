@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Header from './componentes/header';
-import MovieList from './componentes/movielist';
-import Footer from './componentes/footer';
-import FoodCombos from './componentes/combos';
-import Purchase from './componentes/purchase';
-import './App.css';
-import Reserve from './componentes/reserve';
-import Checkout from './componentes/checkout';
+
+import Header from '../componentes/header';
+import MovieList from './Index/movielist';
+import Footer from '../componentes/footer';
+import FoodCombos from '../componentes/combos';
+import Purchase from '../componentes/purchase';
+import Reserve from '../componentes/Reservation/reserve';
+import Checkout from '../componentes/checkout';
 
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './Firebase/firebaseconfig'
+import { auth } from '../Firebase/firebaseconfig'
 
-import Login from "./componentes/login"
-import Register from "./componentes/Register"
+import Login from "./login"
+import Register from "./Register"
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

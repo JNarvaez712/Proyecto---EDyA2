@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import QRCode from 'qrcode';
-import '../checkout.css';
+import styles from './checkout.module.css';
 
 const Checkout = () => {
     const location = useLocation();
@@ -65,37 +65,37 @@ const Checkout = () => {
     }
 
     return (
-        <div className="checkout-page">
-            <div className="back-button-container">
-                <button className="back-button"  onClick={handleBackClick}>Regresar</button>
+        <div className={styles["checkout-page"]}>
+            <div className={styles["back-button-container"]}>
+                <button className={styles["back-button"]}  onClick={handleBackClick}>Regresar</button>
             </div>
             <h2>Datos de Compra</h2>
             <form onSubmit={handleSubmit} className="checkout-form">
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="name">Nombre:</label>
                     <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="phone">Celular:</label>
                     <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="address">Dirección:</label>
                     <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="cardNumber">Tarjeta de Crédito/Débito:</label>
                     <input type="text" id="cardNumber" name="cardNumber" value={formData.cardNumber} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="expiryDate">Fecha de Expiración:</label>
                     <input type="text" id="expiryDate" name="expiryDate" value={formData.expiryDate} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className={styles["form-group"]}>
                     <label htmlFor="cvv">CVV:</label>
                     <input type="text" id="cvv" name="cvv" value={formData.cvv} onChange={handleChange} required />
                 </div>
-                <button type="submit" className="submit-button">Confirmar Compra</button>
+                <button type="submit" className={styles["submit-button"]}>Confirmar Compra</button>
             </form>
         </div>
     );

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../seatReservation.css';
+import styles from './seatReservation.module.css';
 
-const SeatReservation = ({movie, setSelectedSeats, occupiedSeats, setOccupiedSeats}) => {
+const SeatReservation = ({setSelectedSeats, occupiedSeats}) => {
   const [selectedSeats, setLocalSelectedSeats] = useState([]);
   const navigate = useNavigate();
 
@@ -27,16 +27,16 @@ const SeatReservation = ({movie, setSelectedSeats, occupiedSeats, setOccupiedSea
   };
 
   return (
-    <div className="seat-reservation">
-      <div className="back-button-container">
-        <button className="back-button" onClick={handleBackClick}>Regresar</button>
+    <div className={styles["seat-reservation"]}>
+      <div className={styles["back-button-container"]}>
+        <button className={styles["back-button"]} onClick={handleBackClick}>Regresar</button>
       </div>
-      <h2>Reserva tus sillas</h2>
-      <div className="screen">Pantalla</div>
-      <div className="seats">
-        {seatLetters.map((letter, rowIndex) => (
-          <div key={letter} className="seat-row">
-            <div className="seat-label">{letter}</div>
+      <h2 className={styles['reservation-title']}>Reserva tus sillas</h2>
+      <div className={styles["screen"]}>Pantalla</div>
+      <div className={styles["seat-container"]}>
+        {seatLetters.map((letter) => (
+          <div key={letter} className={styles["seat-row"]}>
+            <div className={styles["seat-label"]}>{letter}</div>
             {Array.from({ length: seatsPerRow }, (_, seatIndex) => {
               const seatNumber = `${letter}${seatIndex + 1}`;
               const isOccupied = occupiedSeats.includes(seatNumber);
@@ -44,7 +44,7 @@ const SeatReservation = ({movie, setSelectedSeats, occupiedSeats, setOccupiedSea
               return (
                 <div
                   key={seatIndex}
-                  className={`seat ${isOccupied ? 'occupied' : isSelected ? 'selected' : ''}`}
+                  className={`${styles['seat']} ${isOccupied ? styles['occupied'] : isSelected ? styles['selected'] : ''}`}
                   onClick={() => !isOccupied && toggleSeatSelection(seatNumber)}
                 >
                   {seatIndex + 1}
@@ -53,8 +53,8 @@ const SeatReservation = ({movie, setSelectedSeats, occupiedSeats, setOccupiedSea
             })}
           </div>
         ))}
+        <button className={styles["continue-button"]} onClick={handleContinueClick}>Continuar</button>
       </div>
-      <button className="continue-button" onClick={handleContinueClick}>Continuar</button>
     </div>
   );
 };

@@ -18,7 +18,7 @@ const Register = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Usuario registrado con éxito')
     } catch (error) {
-      //Para personalizar los errores de firebase sin lo del auth
+      //Para personalizar los errores de firebase sin lo del auth en alert
       let errorMessage;
       switch (error.code) {
         case 'auth/email-already-in-use':
