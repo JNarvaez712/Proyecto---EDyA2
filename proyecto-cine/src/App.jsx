@@ -8,19 +8,18 @@ import Purchase from './componentes/purchase';
 import './App.css';
 import Reserve from './componentes/reserve';
 import Checkout from './componentes/checkout';
-
+import ChatBot from './componentes/ChatBot';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './Firebase/firebaseconfig'
+import { auth } from './Firebase/firebaseconfig';
 
-import Login from "./componentes/login"
-import Register from "./componentes/Register"
+import Login from "./componentes/login";
+import Register from "./componentes/Register";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
   useEffect(() => {
-    const unsbscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
       } else {
@@ -29,17 +28,14 @@ const App = () => {
       }
     });
 
-    return () => unsbscribe();
-
+    return () => unsubscribe();
   }, []);
-
 
   const [movies, setMovies] = useState([]);
   const [combos, setCombos] = useState([]);
   const [, setSelectedSeats] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [occupiedSeats, setOccupiedSeats] = useState(() => {
-
     const savedOccupiedSeats = localStorage.getItem('occupiedSeats');
     return (savedOccupiedSeats) ? JSON.parse(savedOccupiedSeats) : [];
   });
@@ -94,21 +90,22 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('occupiedSeats', JSON.stringify(occupiedSeats));
-  } , [occupiedSeats]);
+  }, [occupiedSeats]);
 
   return (
     <Router basename='/'>
-      <Header setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn} />
+      <Header setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
       <Routes>
         <Route exact path="/" element={<MovieList movies={movies} />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reserve/:id" element={isLoggedIn ? <Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats}/> : <Navigate to = "login" />} />
+        <Route path="/reserve/:id" element={isLoggedIn ? <Reserve movies={movies} setSelectedSeats={setSelectedSeats} setSelectedMovie={setSelectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats} /> : <Navigate to="login" />} />
         <Route path="/combos" element={<FoodCombos combos={combos} />} />
-        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats}/>} />
+        <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats} />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />
+      <ChatBot /> {/* Agrega el componente de ChatBot para que esté siempre visible */}
     </Router>
   );
 };
