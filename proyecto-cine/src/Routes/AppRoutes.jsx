@@ -19,6 +19,7 @@ const AppRoutes = ({ isLoggedIn, setIsLoggedIn, movies, setSelectedSeats, setSel
             <Route path="/purchase" element={<Purchase selectedMovie={selectedMovie} occupiedSeats={occupiedSeats} setOccupiedSeats={setOccupiedSeats}/>} />
             <Route path="/checkout" element={<Checkout />} />
         </Routes>
+
     );
 };
 

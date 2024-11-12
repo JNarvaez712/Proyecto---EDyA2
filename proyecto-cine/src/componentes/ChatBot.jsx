@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../ChatBot.css';
+import styles from './ChatBot.module.css';
 
 const faqDatabase = [
   { question: "¿Cuál es el horario de las funciones?", answer: "Nuestras funciones son de 12:00 PM a 11:00 PM todos los días." },
@@ -40,10 +40,10 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="chat-container">
+    <div className={styles["chat-container"]}>
       {!isOpen && (
         <button 
-          className="chat-button"
+          className={styles["chat-button"]}
           onClick={() => setIsOpen(true)}
           aria-label="Abrir chat de ayuda"
         >
@@ -54,11 +54,11 @@ export default function ChatBot() {
       )}
 
       {isOpen && (
-        <div className="chat-window">
-          <div className="chat-header">
-            <h3 className="chat-title">Chat de Ayuda</h3>
+        <div className={styles["chat-window"]}>
+          <div className={styles["chat-header"]}>
+            <h3 className={styles["chat-title"]}>Chat de Ayuda</h3>
             <button 
-              className="close-button"
+              className={styles["close-button"]}
               onClick={() => setIsOpen(false)}
               aria-label="Cerrar chat"
             >
@@ -68,15 +68,15 @@ export default function ChatBot() {
               </svg>
             </button>
           </div>
-          <div className="chat-body">
+          <div className={styles["chat-body"]}>
             {showFaq ? (
-              <div className="faq-container">
-                <p className="welcome-message">¡Bienvenido al chat de ayuda! ¿En qué puedo ayudarte hoy?</p>
-                <p className="faq-title">Preguntas frecuentes:</p>
+              <div className={styles["faq-container"]}>
+                <p className={styles["welcome-message"]}>¡Bienvenido al chat de ayuda! ¿En qué puedo ayudarte hoy?</p>
+                <p className={styles["faq-title"]}>Preguntas frecuentes:</p>
                 {faqDatabase.map((faq, index) => (
                   <button 
                     key={index}
-                    className="faq-button"
+                    className={styles["faq-button"]}
                     onClick={() => handleSend(faq.question)}
                   >
                     {faq.question}
@@ -86,17 +86,17 @@ export default function ChatBot() {
             ) : (
               <>
                 {messages.map((msg, index) => (
-                  <div key={index} className={`message ${msg.role === 'user' ? 'user-message' : 'bot-message'}`}>
+                  <div key={index} className={styles[`message ${msg.role === 'user' ? 'user-message' : 'bot-message'}`]}>
                     {msg.content}
                   </div>
                 ))}
-                <button className="back-button" onClick={handleBack}>
+                <button className={styles["back-button"]} onClick={handleBack}>
                   Volver a preguntas frecuentes
                 </button>
               </>
             )}
           </div>
-          <div className="chat-footer">
+          <div className={styles["chat-footer"]}>
             <form onSubmit={(e) => {
               e.preventDefault();
               handleSend();
@@ -106,9 +106,9 @@ export default function ChatBot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Escribe tu pregunta..."
-                className="chat-input"
+                className={styles["chat-input"]}
               />
-              <button type="submit" className="send-button" aria-label="Enviar mensaje">
+              <button type="submit" className={styles["send-button"]} aria-label="Enviar mensaje">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

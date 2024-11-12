@@ -4,6 +4,7 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import Header from '../componentes/header';
 import Footer from '../componentes/footer';
 import AppRoutes from '../Routes/AppRoutes';
+import ChatBot from '../componentes/ChatBot';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseconfig'
@@ -97,6 +98,7 @@ const App = () => {
         combos={combos}
       />
       <Footer />
+      <ChatBot/>
     </Router>
   );
 };
