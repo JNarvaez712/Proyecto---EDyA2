@@ -1,28 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../Firebase/firebaseconfig'
-
+import useAuth from '../Hooks/useAuth.js'
 import styles from "./pages.module.css"
 
 const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const { login, error } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    // Lógica de autenticación (Cuando vayamos a poner Firebase)
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      localStorage.setItem('isLoggedIn', 'true');
-      setIsLoggedIn(true);
-      navigate('/');
-    } catch (error){
-      alert("Error en las credenciales");
-      console.error(error);
-    }
+    await login(email, password, setIsLoggedIn);
 
   };
 
@@ -39,6 +26,8 @@ const Login = ({ setIsLoggedIn }) => {
           <label htmlFor="password">Contraseña:</label>
           <input type="password" className={styles["campo"]} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" required />
         </div>
+
+        {error && <p className={styles['error-message']}>{error}</p>}
 
         <button type="submit" className={styles['confirm-button']}>Ingresar</button>
 

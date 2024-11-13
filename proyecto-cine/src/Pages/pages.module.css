@@ -39,7 +39,16 @@
     transition: background-color 0.3s, transform 0.3s;
 }
 
-.confirm-button:hover {
+.confirm-button:hover{
     background-color: #12a2e0;
     transform: scale(1.05);
-  }
+}
+
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+  
