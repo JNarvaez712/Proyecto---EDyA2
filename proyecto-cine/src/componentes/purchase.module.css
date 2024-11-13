@@ -6,6 +6,7 @@
   max-width: 80%;
   margin: 0 auto;
   position: relative;
+  text-align: center;
 }
 
 .back-button-container {
@@ -45,6 +46,7 @@
 
 .purchase-details {
   margin-bottom: 20px;
+  align-items: center;
 }
 
 .purchase-details h3 {
