@@ -71,7 +71,7 @@
   }
   
   .faq-button {
-    background-color: #f0f0f0;
+    background-color: #007bff;
     border: none;
     padding: 10px;
     text-align: left;
@@ -80,7 +80,7 @@
   }
   
   .faq-button:hover {
-    background-color: #e0e0e0;
+    background-color: #11a7d4;
   }
   
   .message {
