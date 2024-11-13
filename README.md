@@ -8,8 +8,8 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 -Lista de integrantes:
-David Eduardo Quiceno Muñoz
-Alejandro Clavijo Arce
+David Eduardo Quiceno Muñoz,
+Alejandro Clavijo Arce,
 Jonathan Steven Narvaez Navia
 
 -Enlace al repositorio en Github:
